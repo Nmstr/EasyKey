@@ -1,4 +1,6 @@
 import sys
+import os
+
 from PySide6.QtGui import QGuiApplication
 from PySide6.QtQml import QQmlApplicationEngine
 from PySide6.QtCore import QObject, QDir
@@ -18,8 +20,9 @@ if __name__ == "__main__":
     backend = EasyKey()
     engine.rootContext().setContextProperty("backend", backend)
 
-    engine.addImportPath(QDir.currentPath() + "/qml")
-    engine.load("qml/Main.qml")
+    qml_path = os.path.join("src", "desktop_app", "qml")
+    engine.addImportPath(QDir.currentPath() + "/" + qml_path)
+    engine.load(os.path.join(qml_path, "Main.qml"))
 
     if not engine.rootObjects():
         sys.exit(-1)
